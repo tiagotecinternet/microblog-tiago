@@ -3,6 +3,7 @@ use Microblog\Usuario;
 use Microblog\Utilitarios;
 
 require_once "../inc/cabecalho-admin.php";
+$sessao->verificaAcessoAdmin();
 
 $usuario = new Usuario;
 $usuario->setId($_GET['id']);

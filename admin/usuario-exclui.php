@@ -5,6 +5,7 @@ require_once "../vendor/autoload.php";
 
 $sessao = new ControleDeAcesso;
 $sessao->verificaAcesso();
+$sessao->verificaAcessoAdmin();
 
 // Criamos um objeto para poder acessar os recursos da Classe
 $usuario = new Usuario; // Não esqueça do autoload e do namespace
