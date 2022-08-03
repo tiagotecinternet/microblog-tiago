@@ -182,5 +182,10 @@ final class Usuario {
     {
         $this->tipo = filter_var($tipo, FILTER_SANITIZE_SPECIAL_CHARS);
     }
+
+    public function getConexao(): PDO
+    {
+        return $this->conexao;
+    }
 }
 
