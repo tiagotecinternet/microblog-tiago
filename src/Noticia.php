@@ -32,4 +32,116 @@ final class Noticia {
         a partir da classe de Usuario */
         $this->conexao = $this->usuario->getConexao();
     }
+
+    public function inserir():void {
+        $sql = "INSERT INTO noticias(titulo, texto, resumo, imagem, 
+        destaque, usuario_id, categoria_id) 
+        VALUES(:titulo, :texto, :resumo, :imagem, :destaque, 
+        :usuario_id, :categoria_id)";
+
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindParam(":titulo", $this->titulo, PDO::PARAM_STR);
+            $consulta->bindParam(":texto", $this->texto, PDO::PARAM_STR);
+            $consulta->bindParam(":resumo", $this->resumo, PDO::PARAM_STR);
+            $consulta->bindParam(":imagem", $this->imagem, PDO::PARAM_STR);
+            $consulta->bindParam(":destaque", $this->destaque, PDO::PARAM_STR);
+            $consulta->bindParam(":categoria_id", $this->categoriaId, PDO::PARAM_INT);
+
+            /* Aqui, primeiro chamamos o getter de ID a partir do objeto/classe
+            de Usuario. E só depois atribuimos ele ao parâmetro :usuario_id
+            usando para isso o bindValue. Obs.: bindParam pode ser usado, mas há riscos
+            de erro devido a forma como ele é executado pelo PHP. Por isso, recomenda-se
+            o uso do bindValue em situações como essa. */
+            $consulta->bindValue(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
+
+            $consulta->execute();
+        } catch (Exception $erro) {
+            die("Erro: ". $erro->getMessage());
+        }   
+    }
+
+    /* 
+    try {
+            
+        } catch (Exception $erro) {
+            die("Erro: ". $erro->getMessage());
+        }  */
+
+
+
+
+
+
+   
+    public function getTitulo(): string
+    {
+        return $this->titulo;
+    }
+
+    
+    public function setTitulo(string $titulo)
+    {
+        $this->titulo = filter_var($titulo, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+
+    
+    public function getTexto(): string
+    {
+        return $this->texto;
+    }
+
+    
+    public function setTexto(string $texto)
+    {
+        $this->texto = filter_var($texto, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+
+    
+    public function getResumo(): string
+    {
+        return $this->resumo;
+    }
+
+    
+    public function setResumo(string $resumo)
+    {
+        $this->resumo = filter_var($resumo, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+
+    
+    public function getImagem(): string
+    {
+        return $this->imagem;
+    }
+
+    
+    public function setImagem(string $imagem)
+    {
+        $this->imagem = filter_var($imagem, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+
+    
+    public function getDestaque(): string
+    {
+        return $this->destaque;
+    }
+
+    
+    public function setDestaque(string $destaque)
+    {
+        $this->destaque = filter_var($destaque, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+
+    
+    public function getCategoriaId(): int
+    {
+        return $this->categoriaId;
+    }
+
+    
+    public function setCategoriaId(int $categoriaId)
+    {
+        $this->categoriaId = filter_var($categoriaId, FILTER_SANITIZE_NUMBER_INT);
+    }
 }
