@@ -1,6 +1,17 @@
 <?php
+use Microblog\Categoria;
 require_once "../inc/cabecalho-admin.php";
 $sessao->verificaAcessoAdmin();
+
+$categoria = new Categoria;
+$categoria->setId($_GET['id']);
+$dados = $categoria->listarUm();
+
+if(isset($_POST['atualizar'])){
+	$categoria->setNome($_POST['nome']);
+	$categoria->atualizar();
+	header("location:categorias.php");
+}
 ?>
 
 
@@ -15,7 +26,8 @@ $sessao->verificaAcessoAdmin();
 
 			<div class="mb-3">
 				<label class="form-label" for="nome">Nome:</label>
-				<input class="form-control" type="text" id="nome" name="nome" required>
+				<input value="<?=$dados['nome']?>"
+				class="form-control" type="text" id="nome" name="nome" required>
 			</div>
 			
 			<button class="btn btn-primary" name="atualizar"><i class="bi bi-arrow-clockwise"></i> Atualizar</button>
