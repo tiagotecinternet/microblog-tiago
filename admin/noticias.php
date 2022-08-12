@@ -39,6 +39,7 @@ $listaDeNoticias = $noticia->listar();
     					<?php if($_SESSION['tipo'] === 'admin'){ ?>
 						<th>Autor</th> 
 						<?php } ?>
+						<th class="text-center">Destaque</th>
 						<th class="text-center" colspan="2">Operações</th>
 					</tr>
 				</thead>
@@ -67,6 +68,8 @@ $listaDeNoticias = $noticia->listar();
 			?>
 						</td>
 						<?php } ?>
+
+						<td><?=$noticia['destaque']?></td>
 
 						<td class="text-center">
 							<a class="btn btn-warning" 
