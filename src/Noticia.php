@@ -250,6 +250,24 @@ final class Noticia {
     }
 
 
+    /* Métodos para a área pública do site */
+    public function listarDestaques():array {
+        $sql = "SELECT titulo, imagem, resumo, id FROM noticias
+                WHERE destaque = :destaque ORDER BY data DESC";
+
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindParam(":destaque", $this->destaque, PDO::PARAM_STR);
+            $consulta->execute();
+            $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $erro) {
+            die("Erro: ". $erro->getMessage());
+        }
+        return $resultado;
+    }
+
+
+
     /* 
     try {
             
