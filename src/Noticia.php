@@ -266,7 +266,61 @@ final class Noticia {
         return $resultado;
     }
 
+    public function listarTodas():array {
+        $sql = "SELECT data, titulo, resumo, id FROM noticias
+                ORDER BY data DESC";
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->execute();
+            $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $erro) {
+            die("Erro: ". $erro->getMessage());
+        }
+        return $resultado;
+    }
+    
+    public function listarDetalhes():array {
+        $sql = "SELECT 
+                noticias.id, noticias.titulo, noticias.data,
+                noticias.texto, noticias.imagem, 
+                usuarios.nome AS autor
+                FROM noticias LEFT JOIN usuarios
+                ON noticias.usuario_id = usuarios.id
+                WHERE noticias.id = :id";
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindParam(":id", $this->id, PDO::PARAM_INT);
+            $consulta->execute();
+            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $erro) {
+            die("Erro: ". $erro->getMessage());
+        }
+        return $resultado;
+    }
 
+
+
+    public function listarPorCategoria():array {
+        $sql = "SELECT 
+                    noticias.id, noticias.titulo, 
+                    noticias.data, noticias.resumo,
+                    usuarios.nome AS autor,
+                    categorias.nome AS categoria
+                FROM noticias
+                    LEFT JOIN usuarios ON noticias.usuario_id = usuarios.id
+                    INNER JOIN categorias ON noticias.categoria_id = categorias.id
+                WHERE noticias.categoria_id = :categoria_id";
+        
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindParam(":categoria_id", $this->categoriaId, PDO::PARAM_INT);
+            $consulta->execute();
+            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $erro) {
+            die("Erro: ". $erro->getMessage());
+        }
+        return $resultado;
+    }
 
     /* 
     try {

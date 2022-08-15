@@ -11,6 +11,10 @@ abstract class Utilitarios {
         return date("d/m/Y H:i", strtotime($data));
     }
 
+    public static function formataTexto(string $texto):string {
+        return nl2br($texto);
+    }
+
     public static function dump($dados) {
     // public static function dump(array | bool $dados) {
         echo "<pre>";
