@@ -1,4 +1,5 @@
 <?php
+ob_start();
 use Microblog\ControleDeAcesso;
 require_once "../vendor/autoload.php";
 
