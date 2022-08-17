@@ -1,5 +1,10 @@
-<?php 
+<?php
+use Microblog\Utilitarios;
+
 require_once "inc/cabecalho.php";
+$noticia->setCategoriaId($_GET['id']);
+$dados = $noticia->listarPorCategoria();
+Utilitarios::dump($dados);
 ?>
 
 
