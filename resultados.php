@@ -1,54 +1,22 @@
 <?php
-
-use Microblog\Utilitarios;
-
-require_once "inc/cabecalho.php";
-$noticia->setTermo($_GET['busca']);
+use Microblog\Noticia;
+require_once "vendor/autoload.php";
+$noticia = new Noticia;
+$noticia->setTermo($_POST['busca']);
 $resultados = $noticia->busca();
-// Utilitarios::dump($resultados);
+$quantidade = count($resultados);
+
+    if($quantidade > 0){
 ?>
-
-
-<div class="row bg-white rounded shadow my-1 py-4">
-    <h2 class="col-12 fw-light">
-        Você procurou por 
-        <span class="badge bg-dark"> 
-            <?=$noticia->getTermo() // ou $_GET['busca']?> 
-        </span>
-         e obteve <span class="badge bg-primary">
-            <?=count($resultados)?>
-         </span> resultados
-    </h2>
-    
-    <div class="col-12 my-1">
-    <?php foreach($resultados as $resultado){ ?>
-        <article class="card">
-            <div class="card-body">
-                <h3 class="fs-4 card-title fw-light">
-                    <?=$resultado['titulo']?></h3>
-                <p class="card-text">
-                    <time datetime="<?=$resultado['data']?>">
-                <?=Utilitarios::formataData($resultado['data'])?>
-                    </time> - 
-                    <?=$resultado['resumo']?>
-                </p>                
-                <a href="noticia.php?id=<?=$resultado['id']?>" 
-                class="btn btn-primary btn-sm">Continuar lendo</a>
-            </div>
-        </article>
-    <?php } ?>
+	<h2 class="fs-5">Resultados: <span class="badge bg-primary"><?=$quantidade?></span></h2>
+    <div class="list-group">    
+        <?php foreach($resultados as $arrNoticia) { ?>
+            <a href="noticia.php?id=<?=$arrNoticia['id']?>" class="list-group-item list-group-item-action">
+                <?=$arrNoticia['titulo']?>
+            </a>
+        <?php } ?>
     </div>
-
-
-</div>     
-
-<?php include_once "inc/todas.php"; ?>           
-      
-    
-
-
-
-<?php 
-require_once "inc/rodape.php";
+<?php } else {
 ?>
-
+    <h2 class="fs-5 text-danger">Sem notícias</h2>
+<?php }	?>

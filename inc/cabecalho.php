@@ -62,10 +62,16 @@ $listaDeCategorias = $categoria->listar();
         </li>
       </ul>
 
-      <form autocomplete="off" class="d-flex" action="resultados.php" method="GET">
-        <input name="busca" class="form-control me-2" type="search" placeholder="Pesquise aqui" aria-label="Pesquise aqui">
-        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">OK</button>
-      </form>
+      
+      <div class="area-busca position-relative">
+        <form onsubmit="return false"
+         autocomplete="off" class="d-flex" method="post" id="form-busca">
+          <input id="campo-busca" name="busca" class="form-control me-2" type="search" placeholder="Pesquise aqui" aria-label="Pesquise aqui">
+        </form>
+        <div id="resultados" class="mt-3 position-absolute container bg-white shadow-lg p-3 rounded"></div>
+      </div>
+
+
     </div>
   </div>
 </nav>
